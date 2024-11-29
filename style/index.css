@@ -1,0 +1,47 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+* {
+    font-family: "Pretendard Variable";
+    color: var(--foreground);
+}
+
+h1, h2, h3, h4, h5, h6 { margin: 0px; }
+span {
+    font-size: 14px;
+    color: var(--foreground2);
+}
+
+html { width: 100%; height: 100%; }
+body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    background-color: var(--background);
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    background-color: var(--rearground);
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: var(--rearground-hover);
+}
+button:focus {
+    background-color: var(--rearground-focus);
+}
+
+input {
+    background-color: transparent;
+    border: 1px solid var(--rearground-border);
+    padding: 15px;
+    font-size: 16px;
+}
+input[type="number"] {
+    width: 200px;
+}

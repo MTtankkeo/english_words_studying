@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영어 단어 학습</title>
+
+    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="style/variables.css">
+    <script src="script/index.js"></script>
+</head>
+<body>
+    <div id="ready_page" style="display: flex; flex-direction: column; gap: 15px;">
+        <input id="min_range" type="number" placeholder="최소 범위">
+        <input id="max_range" type="number" placeholder="최대 범위">
+        <div style="display: flex;">
+            <input id="reverse_checkbox" type="checkbox">
+            <label for="reverse_checkbox">반전 모드</label>
+        </div>
+        <button id="start_button">학습 시작</button>
+    </div>
+    <div id="study_page" style="display: none; flex-direction: column; gap: 15px;">
+        <div style="padding: 15px;">
+            <h2 class="problem" style="font-size: 32px;">Unkwon Error</h2>
+            <span class="result">Unkwon Error</span>
+            <span class="status">Unkwon Error</span>
+        </div>
+        <input id="answer_input" type="text" placeholder="정답">
+        <button class="summit_button" type="submit">제출하기</button>
+        <button class="result_button">정답보기</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+
+:root {
+    --primary: rgb(0, 150, 255);
+    --background: black;
+    --rearground: rgb(30, 31, 33);
+    --rearground-hover: rgb(40, 41, 43);
+    --rearground-focus: rgb(50, 51, 53);
+    --rearground-border: rgb(60, 61, 63);
+    --foreground: white;
+    --foreground2: rgb(150, 150, 150);
+}
