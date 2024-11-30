@@ -87,7 +87,7 @@ addEventListener("DOMContentLoaded", async () => {
         setInterval(() => {
             const currentTime = startTime - performance.now();
             const consumeTime = startTime - currentTime;
-            statusText.textContent = `${renderWords.length}개 남음 (${Math.round(consumeTime / 1000)}s)`;
+            statusText.textContent = `${renderWords.length}개 남음 (${Math.round((consumeTime / 1000 / 60) * 10) / 10}분)`;
         }, 1);
     }
 });
