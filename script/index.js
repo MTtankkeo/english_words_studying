@@ -37,6 +37,8 @@ addEventListener("DOMContentLoaded", async () => {
     maxRange.setAttribute("max", words.length);
 
     startButton.onclick = () => {
+        const startTime = performance.now();
+
         readyPage.style.display = "none";
         studyPage.style.display = "flex";
 
@@ -45,6 +47,7 @@ addEventListener("DOMContentLoaded", async () => {
         const resultButton = studyPage.getElementsByClassName("result_button")[0];
         const summitButton = studyPage.getElementsByClassName("summit_button")[0];
         const problemText = studyPage.getElementsByClassName("problem")[0];
+        const historyText = studyPage.getElementsByClassName("history")[0];
         const resultText = studyPage.getElementsByClassName("result")[0];
         const statusText = studyPage.getElementsByClassName("status")[0];
         const answerText = studyPage.getElementsByTagName("input")[0];
@@ -66,9 +69,10 @@ addEventListener("DOMContentLoaded", async () => {
                     return;
                 }
 
+                const previousText = `${problemText.textContent} (${resultText.textContent})`;
+                historyText.textContent = previousText;
                 problemText.textContent = getProblem();
                 resultText.textContent = getResult();
-                statusText.textContent = `${renderWords.length}개 남음`;
                 resultText.style.display = "none";
                 answerText.value = "";
             } else {
@@ -79,5 +83,11 @@ addEventListener("DOMContentLoaded", async () => {
         answerText.onkeydown = event => {
             if (event.key == "Enter") summitButton.click();
         }
+        
+        setInterval(() => {
+            const currentTime = startTime - performance.now();
+            const consumeTime = startTime - currentTime;
+            statusText.textContent = `${renderWords.length}개 남음 (${Math.round(consumeTime / 1000)}s)`;
+        }, 1);
     }
 });
