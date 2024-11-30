@@ -108,8 +108,9 @@
     {"en": "brain", "kr": "뇌"},
     {"en": "cerebrum", "kr": "대뇌"},
     {"en": "cerebellum", "kr": "소뇌"},
-    {"en": "windpipe", "kr": "기관", "description": "일상적인 용어로, 호흡기에서 공기가 폐로 이동하는 경로를 의미합니다."},
-    {"en": "trachea", "kr": "기관", "description": "기술적인 용어로, 호흡기에서 공기가 폐로 이동하는 경로를 의미합니다."},
+    {"en": "windpipe", "kr": "기도", "description": "일상적인 용어로, 호흡기에서 공기가 폐로 이동하는 경로를 의미합니다."},
+    {"en": "trachea", "kr": "기도", "description": "기술적인 용어로, 호흡기에서 공기가 폐로 이동하는 경로를 의미합니다."},
+    {"en": "esophagus", "kr": "식도", "description": "입에서 위로 음식물을 내려보내는 소화기관을 의미합니다."},
     {"en": "organ", "kr": "장기", "description": "의학"},
     {"en": "liver", "kr": "간", "description": "의학"},
     {"en": "kidney", "kr": "신장", "description": "의학"},
@@ -118,5 +119,11 @@
     {"en": "intestines", "kr": "창자"},
     {"en": "large intestine", "kr": "대장"},
     {"en": "small intestine", "kr": "소장"},
-    {"en": "appendix", "kr": "맹장"}
+    {"en": "appendix", "kr": "맹장"},
+    {"en": "duodenum", "kr": "십이지장"},
+    {"en": "pancreas", "kr": "췌장"},
+    {"en": "bladder", "kr": "방광"},
+    {"en": "rectum", "kr": "직장"},
+    {"en": "artery", "kr": "동맥"},
+    {"en": "vein", "kr": "정맥"}
 ]
