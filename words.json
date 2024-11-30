@@ -93,7 +93,8 @@
     {"en": "bone", "kr": "뼈"},
     {"en": "skeleton", "kr": "골격"},
     {"en": "rib", "kr": "갈비뼈"},
-    {"en": "pelvis", "kr": "골반뼈"},
+    {"en": "pelvis", "kr": "골반"},
+    {"en": "hip bone", "kr": "엉덩이뼈"},
     {"en": "joint", "kr": "관절"},
     {"en": "cheekbone", "kr": "광대뼈"},
     {"en": "skull", "kr": "두개골"},
@@ -106,5 +107,16 @@
     {"en": "tendon", "kr": "힘줄"},
     {"en": "brain", "kr": "뇌"},
     {"en": "cerebrum", "kr": "대뇌"},
-    {"en": "cerebellum", "kr": "소뇌"}
+    {"en": "cerebellum", "kr": "소뇌"},
+    {"en": "windpipe", "kr": "기관", "description": "일상적인 용어로, 호흡기에서 공기가 폐로 이동하는 경로를 의미합니다."},
+    {"en": "trachea", "kr": "기관", "description": "기술적인 용어로, 호흡기에서 공기가 폐로 이동하는 경로를 의미합니다."},
+    {"en": "organ", "kr": "장기", "description": "의학"},
+    {"en": "liver", "kr": "간", "description": "의학"},
+    {"en": "kidney", "kr": "신장", "description": "의학"},
+    {"en": "heart", "kr": "심장"},
+    {"en": "lung", "kr": "폐"},
+    {"en": "intestines", "kr": "창자"},
+    {"en": "large intestine", "kr": "대장"},
+    {"en": "small intestine", "kr": "소장"},
+    {"en": "appendix", "kr": "맹장"}
 ]
