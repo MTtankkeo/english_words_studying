@@ -24,7 +24,10 @@ addEventListener("DOMContentLoaded", async () => {
     const maxRange = document.getElementById("max_range");
 
     /** @type {HTMLInputElement} */
-    const reverseCheckbox = document.getElementById("reverse_checkbox");
+    const reverseOption = document.getElementById("reverse_option");
+
+    /** @type {HTMLInputElement} */
+    const speakingOption = document.getElementById("speaking_option");
 
     /** @type {string[]} */
     const words = JSON.parse(await (await fetch("words.json")).text());
@@ -51,13 +54,20 @@ addEventListener("DOMContentLoaded", async () => {
         const resultText = studyPage.getElementsByClassName("result")[0];
         const statusText = studyPage.getElementsByClassName("status")[0];
         const answerText = studyPage.getElementsByTagName("input")[0];
-        const getProblem = () => reverseCheckbox.checked ? renderWords[0]["kr"] : renderWords[0]["en"];
-        const getResult = () => reverseCheckbox.checked ? renderWords[0]["en"] : renderWords[0]["kr"];
+        const getProblem = () => reverseOption.checked ? renderWords[0]["kr"] : renderWords[0]["en"];
+        const getResult = () => reverseOption.checked ? renderWords[0]["en"] : renderWords[0]["kr"];
 
         problemText.textContent = getProblem();
         resultText.style.display = "none";
         resultText.textContent = getResult();
         statusText.textContent = `${renderWords.length}개 남음`;
+
+        if (speakingOption.checked) {
+            answerText.style.opacity = "0.5";
+            answerText.style.userSelect = "none";
+            answerText.style.pointerEvents = "none";
+            answerText.setAttribute("placeholder", "음성으로 정답을 말하세요.");
+        }
 
         resultButton.onclick = () => resultText.style.display = "flex";
         summitButton.onclick = () => {
@@ -65,7 +75,9 @@ addEventListener("DOMContentLoaded", async () => {
                 renderWords.shift();
 
                 if (renderWords.length == 0) {
-                    alert("학습 종료");
+                    const currentTime = startTime - performance.now();
+                    const consumeTime = startTime - currentTime;
+                    alert(`학습 종료 (평균: ${consumeTime / activeWords.length}, 최종: ${consumeTime})`);
                     return;
                 }
 
@@ -83,7 +95,7 @@ addEventListener("DOMContentLoaded", async () => {
         answerText.onkeydown = event => {
             if (event.key == "Enter") summitButton.click();
         }
-        
+
         setInterval(() => {
             const currentTime = startTime - performance.now();
             const consumeTime = startTime - currentTime;

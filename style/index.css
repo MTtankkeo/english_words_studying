@@ -28,6 +28,8 @@ button {
     padding: 15px;
     font-size: 16px;
     cursor: pointer;
+    transition-duration: 0.2s;
+    transition-property: background-color;
 }
 button:hover {
     background-color: var(--rearground-hover);
@@ -44,4 +46,8 @@ input {
 }
 input[type="number"] {
     width: 200px;
+}
+
+touch-ripple {
+    --ripple: red;
 }

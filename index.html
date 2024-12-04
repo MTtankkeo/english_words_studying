@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>영어 단어 학습</title>
-
     <link rel="stylesheet" href="style/index.css">
     <link rel="stylesheet" href="style/variables.css">
+    <link rel="stylesheet" href="style/templates.css">
     <script src="script/index.js"></script>
+    <script src="node_modules/web-touch-ripple/dist/index.esm.js" type="module"></script>
 </head>
 <body>
     <div id="ready_page" style="display: flex; flex-direction: column; gap: 15px;">
         <input id="min_range" type="number" placeholder="최소 범위">
         <input id="max_range" type="number" placeholder="최대 범위">
         <div style="display: flex;">
-            <input id="reverse_checkbox" type="checkbox">
-            <label for="reverse_checkbox">반전 모드</label>
+            <input id="reverse_option" type="radio" name="ready" value="reverse">
+            <label for="reverse_option">반전 모드 (영어 -> 한국어)</label>
+        </div>
+        <div class="deactive" style="display: flex;">
+            <input id="listening_option" type="radio" name="ready" value="listening">
+            <label for="listening_option">듣기 모드</label>
+        </div>
+        <div class="deactive" style="display: flex;">
+            <input id="speaking_option" type="radio" name="ready" value="speaking">
+            <label for="speaking_option">말하기 모드</label>
         </div>
         <button id="start_button">학습 시작</button>
     </div>
