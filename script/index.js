@@ -94,9 +94,10 @@ addEventListener("DOMContentLoaded", async () => {
             answerText.style.userSelect = "none";
             answerText.style.pointerEvents = "none";
             answerText.setAttribute("placeholder", "음성으로 정답을 말하세요.");
+            resultButton.textContent = "넘기기";
 
             speechRecognition = new webkitSpeechRecognition() || new SpeechRecognition();
-            speechRecognition.lang = "en";
+            speechRecognition.lang = "en-US";
             speechRecognition.maxAlternatives = 1;
             if (!speechRecognition) {
                 alert("음성 인식이 지원되지 않는 브라우저를 사용하고 있습니다.");
@@ -130,12 +131,31 @@ addEventListener("DOMContentLoaded", async () => {
             speechRecognition.start();
         }
 
-        resultButton.onclick = () => resultText.style.display = "flex";
-        summitButton.onclick = () => {
-            const result = isSpeakingMode ? getProblem() : getResult();
+        resultButton.onclick = () => {
+            if (isSpeakingMode) {
+                answerText.value = getProblem();
+                summitButton.click();
+                return;
+            }
 
-            if (answerText.value == result
-             || answerText.value == convertToUpperCase(result)) {
+            if (resultText.style.display == "flex") {
+                answerText.value = getResult();
+                resultButton.textContent = "정답보기";
+                summitButton.click();
+            } else {
+                resultText.style.display = "flex";
+                resultButton.textContent = "넘기기";
+            }
+        }
+
+        summitButton.onclick = () => {
+            const resultA = isSpeakingMode ? getProblem() : getResult();
+            const resultB = resultA.split(" ").join("");
+
+            if (answerText.value == resultA
+             || answerText.value == convertToUpperCase(resultA)
+             || answerText.value == resultB
+             || answerText.value == convertToUpperCase(resultB)) {
                 renderWords.shift();
 
                 if (renderWords.length == 0) {
@@ -150,6 +170,7 @@ addEventListener("DOMContentLoaded", async () => {
                 problemText.textContent = convertToUpperCase(getProblem());
                 resultText.textContent = convertToUpperCase(getResult());
                 resultText.style.display = "none";
+                resultButton.textContent = "정답보기";
                 answerText.value = "";
             } else {
                 if (isSpeakingMode == null && answerText.value) alert("정답이 아닙니다.");
