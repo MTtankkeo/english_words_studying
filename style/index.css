@@ -28,14 +28,14 @@ button {
     padding: 15px;
     font-size: 16px;
     cursor: pointer;
-    transition-duration: 0.2s;
-    transition-property: background-color;
+    border: 2px solid transparent;
 }
 button:hover {
     background-color: var(--rearground-hover);
 }
 button:focus {
     background-color: var(--rearground-focus);
+    border: 2px solid var(--primary);
 }
 
 input {

@@ -1,5 +1,8 @@
 
-/** @returns {string[]} */
+/**
+ * @param {number[]} values
+ * @returns {string[]}
+ */
 function mix(values) {
     const results = values.slice();
     for (let i = values.length - 1; i > 0; i--) {
@@ -10,6 +13,26 @@ function mix(values) {
         ];
     }
     return results;
+}
+
+/** @param {string} value  */
+function convertToUpperCase(value) {
+    function convert(inner) {
+        return inner.charAt(0).toUpperCase() + inner.slice(1);
+    }
+
+    return value.split(" ").map(convert).join(" ");
+}
+
+function convertToDuration(value) {
+    const seconds = Math.round(value / 1000);
+
+    // Convert seconds unit to minute unit.
+    if (seconds > 60) {
+        return `${Math.round(seconds / 60 * 10) / 10}분`;
+    }
+
+    return `${seconds}초`;
 }
 
 addEventListener("DOMContentLoaded", async () => {
@@ -35,12 +58,13 @@ addEventListener("DOMContentLoaded", async () => {
     minRange.value = 0;
     maxRange.value = words.length;
     minRange.setAttribute("min", 0);
-    minRange.setAttribute("max", words.length);
+    minRange.setAttribute("max", words.length - 1);
     maxRange.setAttribute("min", 0);
     maxRange.setAttribute("max", words.length);
 
     startButton.onclick = () => {
         const startTime = performance.now();
+        const isSpeakingMode = speakingOption.checked;
 
         readyPage.style.display = "none";
         studyPage.style.display = "flex";
@@ -57,38 +81,81 @@ addEventListener("DOMContentLoaded", async () => {
         const getProblem = () => reverseOption.checked ? renderWords[0]["kr"] : renderWords[0]["en"];
         const getResult = () => reverseOption.checked ? renderWords[0]["en"] : renderWords[0]["kr"];
 
-        problemText.textContent = getProblem();
+        problemText.textContent = convertToUpperCase(getProblem());
         resultText.style.display = "none";
-        resultText.textContent = getResult();
+        resultText.textContent = convertToUpperCase(getResult());
         statusText.textContent = `${renderWords.length}개 남음`;
 
-        if (speakingOption.checked) {
+        /** @type {speechRecognition} */
+        let speechRecognition;
+
+        if (isSpeakingMode) {
             answerText.style.opacity = "0.5";
             answerText.style.userSelect = "none";
             answerText.style.pointerEvents = "none";
             answerText.setAttribute("placeholder", "음성으로 정답을 말하세요.");
+
+            speechRecognition = new webkitSpeechRecognition() || new SpeechRecognition();
+            speechRecognition.lang = "en";
+            speechRecognition.maxAlternatives = 1;
+            if (!speechRecognition) {
+                alert("음성 인식이 지원되지 않는 브라우저를 사용하고 있습니다.");
+            }
+
+            speechRecognition.addEventListener("end", speechRecognition.start);
+            speechRecognition.addEventListener("error", (event) => {
+                if (event.error = "no-speech") {
+                    alert("오랜시간 동안 음성이 감지되지 않았습니다.");
+                    speechRecognition.stop();
+                } else {
+                    switch (event.error) {
+                        case "audio-capture": alert("마이크에 접근할 수 없습니다. 설정을 확인해주세요."); break;
+                        case "not-allowed"  : alert("마이크 권한이 거부되었습니다."); break;
+                        default             : alert("알 수 없는 에러가 발생했습니다."); break;
+                    }
+                }
+            });
+
+            speechRecognition.addEventListener("result", event => {
+                const result = event.results[0][0]["transcript"];
+                if (result != "") {
+                    answerText.value = event.results[0][0]["transcript"];
+                    summitButton.click();
+                } else {
+                    speechRecognition.stop();
+                    speechRecognition.start();
+                }
+            });
+
+            speechRecognition.start();
         }
 
         resultButton.onclick = () => resultText.style.display = "flex";
         summitButton.onclick = () => {
-            if (answerText.value == getResult()) {
+            const result = isSpeakingMode ? getProblem() : getResult();
+
+            if (answerText.value == result
+             || answerText.value == convertToUpperCase(result)) {
                 renderWords.shift();
 
                 if (renderWords.length == 0) {
                     const currentTime = startTime - performance.now();
                     const consumeTime = startTime - currentTime;
-                    alert(`학습 종료 (평균: ${consumeTime / activeWords.length}, 최종: ${consumeTime})`);
+                    alert(`학습 종료 (평균: ${convertToDuration(consumeTime / activeWords.length)}, 최종: ${convertToDuration(consumeTime)})`);
                     return;
                 }
 
                 const previousText = `${problemText.textContent} (${resultText.textContent})`;
-                historyText.textContent = previousText;
-                problemText.textContent = getProblem();
-                resultText.textContent = getResult();
+                historyText.textContent = `${previousText}`;
+                problemText.textContent = convertToUpperCase(getProblem());
+                resultText.textContent = convertToUpperCase(getResult());
                 resultText.style.display = "none";
                 answerText.value = "";
             } else {
-                if (answerText.value) alert("정답이 아닙니다.");
+                if (isSpeakingMode == null && answerText.value) alert("정답이 아닙니다.");
+                if (isSpeakingMode) {
+                    speechRecognition.stop();
+                }
             }
         }
 
@@ -99,7 +166,7 @@ addEventListener("DOMContentLoaded", async () => {
         setInterval(() => {
             const currentTime = startTime - performance.now();
             const consumeTime = startTime - currentTime;
-            statusText.textContent = `${renderWords.length}개 남음 (${Math.round((consumeTime / 1000 / 60) * 10) / 10}분)`;
+            statusText.textContent = `${renderWords.length}개 남음 (${convertToDuration(consumeTime)})`;
         }, 1);
     }
 });
