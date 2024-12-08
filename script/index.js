@@ -170,8 +170,11 @@ addEventListener("DOMContentLoaded", async () => {
                 problemText.textContent = convertToUpperCase(getProblem());
                 resultText.textContent = convertToUpperCase(getResult());
                 resultText.style.display = "none";
-                resultButton.textContent = "정답보기";
                 answerText.value = "";
+
+                if (!isSpeakingMode) {
+                    resultButton.textContent = "정답보기";
+                }
             } else {
                 if (isSpeakingMode == null && answerText.value) alert("정답이 아닙니다.");
                 if (isSpeakingMode) {
